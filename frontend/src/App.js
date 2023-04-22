@@ -21,6 +21,7 @@ const App = () => {
     setIsLoading(true);
     setSearched(true); // initial boolean to get rid of intro page
     setOpenMarkers(false);
+    setOpenPaths(false);
     
     console.log(`Search for "${query}"`);
     const data = await getMapData(query);
@@ -43,6 +44,7 @@ const App = () => {
     setIsLoading(true);
     setSearched(true); // initial boolean to get rid of intro page
     setOpenPaths(false);
+    setOpenMarkers(false);
 
     console.log(`Search for "${query}"`);
     const data = await getMapData(query);
