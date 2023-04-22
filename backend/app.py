@@ -128,11 +128,13 @@ def get_coordinates():
     geos = []
     for location in locations:
         geo = geolocator.geocode(location, timeout=1000)
-        geos.append([geo.latitude, geo.longitude])
+        if geo == None:
+            pass
+        else:
+            geos.append([geo.latitude, geo.longitude])
     
-    # Call your existing script with the URL as input
-    # and return the results as JSON
     return jsonify(geos)
 
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
