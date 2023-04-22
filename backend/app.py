@@ -1,6 +1,9 @@
 # run 'python -m spacy download en_core_web_sm'
 # run 'python -m spacy download xx_ent_wiki_sm'
 from youtube_transcript_api import YouTubeTranscriptApi as yta
+# pip install googlesearch-python
+from googlesearch import search_images
+import urllib
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from geopy.exc import GeocoderTimedOut
@@ -136,6 +139,17 @@ def get_coordinates():
     print(geos)
     return jsonify(geos)
 
+@app.route('/api/get_images')
+def get_images():
+    locations = request.args.getlist('locations[]')
+    image_urls = []
+    for location in locations:
+        query = location + " images"
+        for url in search_images(query, num_results=1):
+            image_urls.append(url)
+            break  # get only the first result
+
+    return jsonify(image_urls)
 
 if __name__ == '__main__':
     app.run(debug=True)
