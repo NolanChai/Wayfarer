@@ -5,6 +5,7 @@ from youtube_transcript_api import YouTubeTranscriptApi as yta
 from googlesearch import search
 import requests
 from bs4 import BeautifulSoup
+import re
 import urllib
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -141,79 +142,23 @@ def get_coordinates():
     print(geos)
     return jsonify(geos)
 
-@app.route('/get_image_urls', methods=['POST'])
-def get_image_urls():
-    headers = {
-        "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582"
-    }
+@app.route('/generate_images', methods=['POST'])
+def generate_images():
+    locations = request.get_json()
+    image_urls = []
 
-    search_terms = request.get_json()
-    img_urls = []
+    for location in locations:
+        prompt = f"{location} location"
+        response = openai.Image.create(
+            prompt=prompt,
+            n=1,
+            size="256x256",
+            model="image-alpha-001"
+        )
+        image_url = response['data'][0]['url']
+        image_urls.append(image_url)
 
-    for term in search_terms:
-        params = {
-            "q": f"{term} shareds photo",
-            "sourceid": "chrome",
-        }
-
-        html = requests.get("https://www.google.com/search", params=params, headers=headers)
-        soup = BeautifulSoup(html.text, 'lxml')
-
-        for result in soup.select('div[jsname=dTDiAc]'):
-            link = f"https://www.google.com{result.a['href']}"
-            being_used_on = result['data-lpage']
-            print(f'Link: {link}\nBeing used on: {being_used_on}\n')
-
-        # finding all script (<script>) tags
-        script_img_tags = soup.find_all('script')
-
-        # https://regex101.com/r/L3IZXe/4
-        img_matches = re.findall(r"s='data:image/jpeg;base64,(.*?)';", str(script_img_tags))
-
-        for index, image in enumerate(img_matches):
-            try:
-                # https://stackoverflow.com/a/6966225/15164646
-                img_data = base64.b64decode(str(image))
-                img_url = f"data:image/jpeg;base64,{base64.b64encode(img_data).decode('utf-8')}"
-                img_urls.append(img_url)
-            except:
-                pass
-
-    return jsonify(img_urls)
-
-"""
-import React, { useState } from 'react';
-
-function App() {
-  const [searchTerms, setSearchTerms] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
-
-  const handleSearch = async () => {
-    const response = await fetch('/get_image_urls', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(searchTerms)
-    });
-    const data = await response.json();
-    setImageUrls(data);
-  };
-
-  return (
-    <div>
-      <input type="text" onChange={(e) => setSearchTerms(e.target.value.split(','))} />
-      <button onClick={handleSearch}>Search</button>
-      {imageUrls.map((url) => (
-        <img src={url} alt="search result" />
-      ))}
-    </div>
-  );
-}
-
-export default App;
-"""
+    return jsonify(image_urls)
 
 if __name__ == '__main__':
     app.run(debug=True)
