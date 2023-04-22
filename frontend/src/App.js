@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Map, MapPath } from  "./components/mapPath";
 import { MapMarkers } from "./components/mapMarkers";
-import { getMapData } from "./api";
+import { getMapData, getMarkerImages } from "./api";
 
 const App = () => {
 
   const [query, setQuery] = useState('');
   const [mapData, setMapData] = useState([]);
+  const [imageListData, setImageListData] =useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
@@ -31,6 +32,12 @@ const App = () => {
       setMapData(data);
       setOpenMarkers(true);
       setQuery('');
+
+      let locations = [];
+      data.map((data) => locations = [...locations, data[1]])
+      const imageURLs = await getMarkerImages(locations);
+      console.log(imageURLs)
+
     } else {
       setIsLoading(false);
       setIsInvalid(true);
