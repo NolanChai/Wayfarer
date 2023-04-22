@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import YouTube from 'react-youtube';
 
 export const YoutubeVideo = (url) => {
     console.log("this is the url")
@@ -13,6 +14,7 @@ export const YoutubeVideo = (url) => {
         let videoId = JSON.stringify(url).split('v=')[1].replace('\"}', '');
         console.log('vid id');
         console.log(videoId);
+        
         const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
         const titleUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`;
 
@@ -30,8 +32,9 @@ export const YoutubeVideo = (url) => {
 
     return (
         <div>
+            <h2 className="text-white font-sans"> {title} </h2>
             <img src={thumbnailUrl} alt="Thumbnail" />
-            <h2>{title}</h2>
+            
         </div>
     );
 }

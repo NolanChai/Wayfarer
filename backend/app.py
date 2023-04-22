@@ -2,7 +2,6 @@
 # run 'python -m spacy download xx_ent_wiki_sm'
 from youtube_transcript_api import YouTubeTranscriptApi as yta
 # pip install googlesearch-python
-from googlesearch import search
 import requests
 from bs4 import BeautifulSoup
 import urllib

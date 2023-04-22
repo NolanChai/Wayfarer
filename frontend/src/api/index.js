@@ -13,6 +13,7 @@ export const getMapData = async (url) => {
     }
 }
 
+/*
 export const getMarkerImages = async (locations) => {
     try {
         // locations is an array of places
@@ -27,4 +28,15 @@ export const getMarkerImages = async (locations) => {
         return null;
     }
 }
+*/
 
+export const getMarkerImages = async (locations) => {
+    const url = "http://127.0.0.1:5000/api/get_images";
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(locations)
+      });
+}

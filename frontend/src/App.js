@@ -52,6 +52,7 @@ const App = () => {
     console.log(imageURLs);
   }, [mapData])
   */
+ 
   const handleClickPaths = async () => {
     
     setIsInvalid(false);
