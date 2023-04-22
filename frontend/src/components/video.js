@@ -7,10 +7,10 @@ export const YoutubeVideo = (url) => {
     const [thumbnailUrl, setThumbnailUrl] = useState('');
     const [title, setTitle] = useState('');
 
-    var API_KEY = "AIzaSyAlRmWzUU-pau84L87_rK4RFukOHs2_05g";
+    const API_KEY = "AIzaSyAlRmWzUU-pau84L87_rK4RFukOHs2_05g";
 
     useEffect(() => {
-        const videoId = url.split('v=')[1];
+        let videoId = JSON.stringify(url).split('v=')[1];
         const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
         const titleUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet&key=${API_KEY}`;
 
