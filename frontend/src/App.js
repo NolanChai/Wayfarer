@@ -3,10 +3,12 @@ import "./App.css";
 import { Map, MapPath } from  "./components/mapPath";
 import { MapMarkers } from "./components/mapMarkers";
 import { getMapData, getMarkerImages } from "./api";
+import { YoutubeVideo } from "./components/youtube"
 
 const App = () => {
 
   const [query, setQuery] = useState('');
+  const [youtubeURL, setYoutubeURL] = useState('');
   const [mapData, setMapData] = useState([]);
   const [imageListData, setImageListData] =useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,13 +32,10 @@ const App = () => {
     if (data) {
       setIsLoading(false);
       setMapData(data);
-      setOpenMarkers(true);
+      setYoutubeURL(query);
       setQuery('');
-
-      let locations = [];
-      data.map((data) => locations = [...locations, data[1]])
-      const imageURLs = await getMarkerImages(locations);
-      console.log(imageURLs)
+      console.log(youtubeURL)
+      setOpenMarkers(true);
 
     } else {
       setIsLoading(false);
@@ -45,6 +44,14 @@ const App = () => {
     }
   }
 
+  /*
+  useEffect(() => {
+    let locations = [];
+    mapData.map((data) => locations = [...locations, data[1]])
+    const imageURLs = getMarkerImages(locations);
+    console.log(imageURLs);
+  }, [mapData])
+  */
   const handleClickPaths = async () => {
     
     setIsInvalid(false);
@@ -59,8 +66,10 @@ const App = () => {
     if (data) {
       setIsLoading(false);
       setMapData(data);
-      setOpenPaths(true);
+      setYoutubeURL(query);
       setQuery('');
+      console.log(youtubeURL)
+      setOpenPaths(true);
     } else {
       setIsLoading(false);
       setIsInvalid(true);
@@ -123,15 +132,17 @@ const App = () => {
         )}
 
         {openPaths && (
-
-          <MapPath />
-
+          <div>
+            <MapPath />
+            
+          </div>
         )}
 
         {openMarkers && (
-        
-          <MapMarkers mapData={mapData} />
-          
+          <div>
+            <MapMarkers mapData={mapData} />
+            <YoutubeVideo url={youtubeURL}/>
+          </div>
         )}
 
     </div>

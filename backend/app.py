@@ -132,7 +132,7 @@ def get_coordinates():
 
     geos = []
     for location in locations:
-        geo = geolocator.geocode(location, timeout=1000)
+        geo = geolocator.geocode(location, timeout=10000)
         if geo == None:
             pass
         else:

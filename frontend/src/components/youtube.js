@@ -7,17 +7,21 @@ export const YoutubeVideo = (url) => {
     const [thumbnailUrl, setThumbnailUrl] = useState('');
     const [title, setTitle] = useState('');
 
-    const API_KEY = "AIzaSyAlRmWzUU-pau84L87_rK4RFukOHs2_05g";
+    const API_KEY = 'AIzaSyAlRmWzUU-pau84L87_rK4RFukOHs2_05g';
 
     useEffect(() => {
-        const videoId = url.split('v=')[1];
+        let videoId = JSON.stringify(url).split('v=')[1].replace('\"}', '');
+        console.log('vid id');
+        console.log(videoId);
         const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-        const titleUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet&key=${API_KEY}`;
+        const titleUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`;
 
         const fetchVideo = async () => {
             const response = await fetch(titleUrl);
             const data = await response.json();
+            console.log(data);
             setTitle(data.items[0].snippet.title);
+            console.log(data.items[0].snippet.title);
         };
 
         setThumbnailUrl(thumbnailUrl);
