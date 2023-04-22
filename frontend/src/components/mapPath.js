@@ -8,7 +8,7 @@ import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZWNsYWhhY2tzMjAyMyIsImEiOiJjbGdyanp4NDkxazA1M2VwM3lmb3QzNmpqIn0.0kouosUyDJf1DznZvltYZw';
 
-export const Map = () => {
+export const MapPath = () => {
     
     useEffect(() => {
         const map = new mapboxgl.Map({

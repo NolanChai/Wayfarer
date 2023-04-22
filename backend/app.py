@@ -131,8 +131,9 @@ def get_coordinates():
         if geo == None:
             pass
         else:
-            geos.append([geo.latitude, geo.longitude])
+            geos.append([[geo.longitude, geo.latitude], geo.address])
     
+    print(geos)
     return jsonify(geos)
 
 
