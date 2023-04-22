@@ -147,6 +147,7 @@ def get_images():
         query = location + " images"
         for url in search_images(query, num_results=1):
             image_urls.append(url)
+            print(url)
             break  # get only the first result
 
     return jsonify(image_urls)
