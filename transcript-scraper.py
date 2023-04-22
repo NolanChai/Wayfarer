@@ -1,6 +1,8 @@
 # run 'python -m spacy download en_core_web_sm'
 # run 'python -m spacy download xx_ent_wiki_sm'
 from youtube_transcript_api import YouTubeTranscriptApi as yta
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from geopy.exc import GeocoderTimedOut
 from urllib.parse import urlparse, parse_qs
 from geopy.geocoders import Nominatim
@@ -121,4 +123,16 @@ for location in locations:
     geo = geolocator.geocode(location, timeout=1000)
     geos.append([geo.latitude, geo.longitude])
 
-print(geos)
+app = Flask(__name__)
+CORS(app)
+
+@app.route('/api/get_coordinates')
+def get_coordinates():
+    url = request.args.get('url')
+    
+    # Call your existing script with the URL as input
+    # and return the results as JSON
+    return jsonify(geos)
+
+if __name__ == '__main__':
+    app.run()
