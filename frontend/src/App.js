@@ -3,6 +3,7 @@ import "./App.css";
 import { Map } from  "./components/mapPath";
 import { MapMarkers } from "./components/mapMarkers";
 import { getMapData } from "./api";
+import { YoutubeVideo } from "./components/video";
 
 const App = () => {
 
@@ -50,6 +51,7 @@ const App = () => {
             <div className="flex flex-col items-center">
               <div className="loader mb-3"/>
               <div className="loading mb-1"> Searching </div>
+              <YoutubeVideo url={query}/>
             </div>
           </div>
         )}
