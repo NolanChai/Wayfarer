@@ -40,10 +40,6 @@ export const MapMarkers = (MapData) => {
             toVisitNames = [...toVisitNames, data[1]];
         })
     
-        //const toVisit = [UCLA, UCI, UCSD];
-        //const toVisitNames = ['UCLA', 'UCI', 'UCSD'];
-    
-        console.log('HELLO');
         map.on('load', function() {
             for (var i = 0; i < toVisit.length; i++) {
                // directions.setWaypoint(i, toVisit[i]);

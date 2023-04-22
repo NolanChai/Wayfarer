@@ -1,27 +1,63 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Map } from  "./components/mapPath";
+import { Map, MapPath } from  "./components/mapPath";
 import { MapMarkers } from "./components/mapMarkers";
 import { getMapData } from "./api";
 
 const App = () => {
 
   const [query, setQuery] = useState('');
-  const [mapData, setMapData] = useState(false);
+  const [mapData, setMapData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
-  const handleClick= async () => {
+  const [openMarkers, setOpenMarkers] = useState(false);
+  const [openPaths, setOpenPaths] = useState(false);
+  const [isInvalid, setIsInvalid] = useState(false);
+
+  const handleClickMarkers = async () => {
+    
+    setIsInvalid(false);
     setIsLoading(true);
-    setSearched(true);
+    setSearched(true); // initial boolean to get rid of intro page
+    setOpenMarkers(false);
     
     console.log(`Search for "${query}"`);
     const data = await getMapData(query);
     
+    if (data) {
+      setIsLoading(false);
+      setMapData(data);
+      setOpenMarkers(true);
+      setQuery('');
+    } else {
+      setIsLoading(false);
+      setIsInvalid(true);
+      setQuery('');
+    }
+  }
+
+  const handleClickPaths = async () => {
     
-    setIsLoading(false);
-    setMapData(data);
-    setQuery('');
+    setIsInvalid(false);
+    setIsLoading(true);
+    setSearched(true); // initial boolean to get rid of intro page
+    setOpenPaths(false);
+
+    console.log(`Search for "${query}"`);
+    const data = await getMapData(query);
+    
+    if (data) {
+      setIsLoading(false);
+      setMapData(data);
+      setOpenPaths(true);
+      setQuery('');
+    } else {
+      setIsLoading(false);
+      setIsInvalid(true);
+      setQuery('');
+    }
+    
   }
 
   return (
@@ -39,9 +75,16 @@ const App = () => {
 
           <button
             className="rounded px-2"
-            onClick={handleClick}
+            onClick={handleClickMarkers}
           >
-            <img className="w-12 px-1" src="./Search_Icon.svg" alt="search"/>
+            <img className="w-10 px-1 py-1" src="./Map_pin_icon.svg" alt="search"/>
+          </button>
+
+          <button
+            className="rounded px-2"
+            onClick={handleClickPaths}
+          >
+            <img className="w-12 px-1" src="./path.svg" alt="search"/>
           </button>
         </div>
 
@@ -55,12 +98,28 @@ const App = () => {
         )}
 
         {!searched && (
-          <p className="text-center mt-3 font-semibold">
+          <p className="text-center text-white mt-3 font-semibold">
             Pinpoint where your favourite YouTubers go!
           </p>
+          
         )}
         
-        {mapData && (
+        {isInvalid && (
+          <div>
+          <div className="invalid"> </div>
+          <div className="flex flex-row justify-center mt-6">
+            <h1 className="text-white text-xl"> Couldn't find your video! </h1>
+          </div>
+          </div>
+        )}
+
+        {openPaths && (
+
+          <MapPath />
+
+        )}
+
+        {openMarkers && (
         
           <MapMarkers mapData={mapData} />
           
