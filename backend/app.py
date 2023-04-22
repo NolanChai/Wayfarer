@@ -2,7 +2,9 @@
 # run 'python -m spacy download xx_ent_wiki_sm'
 from youtube_transcript_api import YouTubeTranscriptApi as yta
 # pip install googlesearch-python
-from googlesearch import search_images
+from googlesearch import search
+import requests
+from bs4 import BeautifulSoup
 import urllib
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -142,14 +144,24 @@ def get_coordinates():
 @app.route('/api/get_images')
 def get_images():
     locations = request.args.getlist('locations[]')
+
     image_urls = []
     for location in locations:
-        query = location + " images"
-        for url in search_images(query, num_results=1):
-            image_urls.append(url)
-            print(url)
-            break  # get only the first result
+        query = location + ' image'
+        urls = search(query, num_results=1)
 
+        for url in urls:
+            try:
+                response = requests.get(url)
+                soup = BeautifulSoup(response.content, 'html.parser')
+                img_tags = soup.find_all('img')
+                if img_tags:
+                    image_urls.append(img_tags[0]['src'])
+                else:
+                    image_urls.append(None)
+            except:
+                image_urls.append(None)
+    print(image_urls)
     return jsonify(image_urls)
 
 if __name__ == '__main__':
