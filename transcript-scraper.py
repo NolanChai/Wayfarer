@@ -118,7 +118,7 @@ locations = address.split('\n')
 
 geos = []
 for location in locations:
-    geo = geolocator.geocode(location, timeout=200)
+    geo = geolocator.geocode(location, timeout=1000)
     geos.append([geo.latitude, geo.longitude])
 
 print(geos)
