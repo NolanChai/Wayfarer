@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Map } from  "./components/mapSuccess";
+import { getMapData } from "./api";
 
 const App = () => {
   
@@ -12,7 +13,7 @@ const App = () => {
   const handleClick= () => {
     console.log(`Search for "${query}"`);
     setSearched(true);
-    // send request using info from query
+    getMapData(query);
     setQuery('');
   }
 
