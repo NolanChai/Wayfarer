@@ -143,13 +143,13 @@ def get_coordinates():
 
 @app.route('/generate_images', methods=['POST'])
 def generate_images():
-    locations = request.get_json()
+    locations_with_array, location = request.get_json()
+    locations = [loc[0] for loc in locations_with_array]
+    locations.append(location)
     image_urls = []
 
-    print(locations)
-    """
-    for location in locations:
-        prompt = f"{location} location"
+    for loc in locations:
+        prompt = f"{loc} location"
         response = openai.Image.create(
             prompt=prompt,
             n=1,
@@ -160,6 +160,6 @@ def generate_images():
         image_urls.append(image_url)
 
     return jsonify(image_urls)
-    """
+
 if __name__ == '__main__':
     app.run(debug=True)
