@@ -1,3 +1,36 @@
+.transition-all {
+  transition: opacity 300ms ease-in-out;
+}
+
+.animate-charcter
+{
+  text-transform: uppercase;
+  text-align: center;
+  background-image: linear-gradient(
+    -225deg,
+    #edecf4 0%,
+    #ffbaf0 29%,
+    #fca3c1 67%,
+    #fbcc96 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 4s linear infinite;
+
+  font-size: 60px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
 
 input {
 
@@ -13,6 +46,62 @@ button {
 .placesList {
   background-color: #FEFAE0;
 }
+
+.pinJump {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin: 20px auto;
+  box-sizing: border-box;
+  position: relative;
+}
+.pinJump::after {
+  content: '';  
+  box-sizing: border-box;
+  width: 48px;
+  height: 48px;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  border-radius: 50% 50% 0;
+  border: 15px solid #FFF;
+  transform: rotate(45deg) translate(0, 0);
+  box-sizing: border-box;
+  animation: animMarker 0.4s ease-in-out infinite alternate;
+}
+.pinJump::before {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 150%;
+  width: 24px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  animation: animShadow 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes animMarker {
+  0% {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  100% {
+    transform: rotate(45deg) translate(-5px, -5px);
+  }
+}
+
+@keyframes animShadow {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+    
 
 .invalid {
   width: 48px;
