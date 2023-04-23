@@ -1,8 +1,13 @@
 # run 'python -m spacy download en_core_web_sm'
 # run 'python -m spacy download xx_ent_wiki_sm'
 from youtube_transcript_api import YouTubeTranscriptApi as yta
+# pip install googlesearch-python
+import requests
+from bs4 import BeautifulSoup
+import re
+import urllib
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from geopy.exc import GeocoderTimedOut
 from urllib.parse import urlparse, parse_qs
 from geopy.geocoders import Nominatim
@@ -35,7 +40,7 @@ def extract_id(link):
     return id
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
 @app.route('/api/get_coordinates')
 def get_coordinates():
@@ -127,15 +132,35 @@ def get_coordinates():
 
     geos = []
     for location in locations:
-        geo = geolocator.geocode(location, timeout=1000)
+        geo = geolocator.geocode(location, timeout=100000)
         if geo == None:
             pass
         else:
             geos.append([[geo.longitude, geo.latitude], geo.address])
     
-    print(geos)
+    #print(geos)
     return jsonify(geos)
 
+""" @app.route('/api/generate_images', methods=['POST'])
+@cross_origin(origins=['http://localhost:3000'])
+def generate_images():
+    locations_with_array, location = request.get_json()
+    locations = [loc[0] for loc in locations_with_array]
+    locations.append(location)
+    image_urls = []
+
+    for loc in locations:
+        prompt = f"{loc} location"
+        response = openai.Image.create(
+            prompt=prompt,
+            n=1,
+            size="256x256",
+            model="image-alpha-001"
+        )
+        image_url = response['data'][0]['url']
+        image_urls.append(image_url)
+    
+    return jsonify(image_urls) """
 
 if __name__ == '__main__':
     app.run(debug=True)

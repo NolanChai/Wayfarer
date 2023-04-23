@@ -40,10 +40,6 @@ export const MapMarkers = (MapData) => {
             toVisitNames = [...toVisitNames, data[1]];
         })
     
-        //const toVisit = [UCLA, UCI, UCSD];
-        //const toVisitNames = ['UCLA', 'UCI', 'UCSD'];
-    
-        console.log('HELLO');
         map.on('load', function() {
             for (var i = 0; i < toVisit.length; i++) {
                // directions.setWaypoint(i, toVisit[i]);
@@ -58,7 +54,7 @@ export const MapMarkers = (MapData) => {
     
     return (
         <div className="rounded m-6 p-3 flex justify-center">
-            <div className="rounded-xl bg-gray-300 p-2">
+            <div className="rounded-xl bg-paper_yellow p-2">
                 <div className="rounded-xl" id="map" style={{ width: '800px', height: '600px' }} />
             </div>
         </div>
