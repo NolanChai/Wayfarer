@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import re
 import urllib
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from geopy.exc import GeocoderTimedOut
 from urllib.parse import urlparse, parse_qs
 from geopy.geocoders import Nominatim
@@ -40,7 +40,7 @@ def extract_id(link):
     return id
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
 @app.route('/api/get_coordinates')
 def get_coordinates():
@@ -138,10 +138,11 @@ def get_coordinates():
         else:
             geos.append([[geo.longitude, geo.latitude], geo.address])
     
-    print(geos)
+    #print(geos)
     return jsonify(geos)
 
-@app.route('/generate_images', methods=['POST'])
+""" @app.route('/api/generate_images', methods=['POST'])
+@cross_origin(origins=['http://localhost:3000'])
 def generate_images():
     locations_with_array, location = request.get_json()
     locations = [loc[0] for loc in locations_with_array]
@@ -158,8 +159,8 @@ def generate_images():
         )
         image_url = response['data'][0]['url']
         image_urls.append(image_url)
-
-    return jsonify(image_urls)
+    
+    return jsonify(image_urls) """
 
 if __name__ == '__main__':
     app.run(debug=True)

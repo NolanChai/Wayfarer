@@ -4,6 +4,7 @@ import { Map, MapPath } from  "./components/mapPath";
 import { MapMarkers } from "./components/mapMarkers";
 import { getMapData, getMarkerImages } from "./api";
 import { YoutubeVideo } from "./components/youtube"
+import { PlaceCard } from "./components/cardButton";
 
 const App = () => {
 
@@ -13,10 +14,13 @@ const App = () => {
   const [imageListData, setImageListData] =useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [placeLinks, setPlaceLinks] = useState([]);
 
   const [openMarkers, setOpenMarkers] = useState(false);
   const [openPaths, setOpenPaths] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
+
+  const colors = ['bg-paper_yellow', 'bg-paper_brown', 'bg-paper_green']
 
   const handleClickMarkers = async () => {
     
@@ -44,18 +48,6 @@ const App = () => {
     }
   }
 
-  
-  useEffect(() => {
-
-    console.log("Use effect hook area")
-    console.log(mapData);
-    let locations = mapData.map((data) => data[1])
-    console.log(locations)
-    const imageURLs = getMarkerImages(locations);
-    console.log(imageURLs);
-  }, [mapData])
-  
-
   const handleClickPaths = async () => {
     
     setIsInvalid(false);
@@ -82,9 +74,29 @@ const App = () => {
     
   }
 
+  const customLinkGenerator = (data) => {
+    let nameArray = data.map((data) => data[1].split(',')[0].trim());
+    //console.log("we are in custom link generator")
+    //console.log(nameArray)
+    const googleSearch = 'https://www.google.com/search?q=';
+    const linksArray = nameArray.map((name) => { 
+      return {name: name, url: googleSearch + name }
+    })
+    //console.log(linksArray)
+    setPlaceLinks(linksArray);
+  }
+
+  useEffect(() => {
+    //console.log("Trying to find custom links!")
+    //console.log(mapData)
+    customLinkGenerator(mapData)
+    //console.log(placeLinks)
+  }, [mapData])
+
   return (
     <div className="font-sans">
-      <h1 className=" text-white text-center font-semibold text-5xl font-sans mt-40 mb-3"> YouPath </h1>
+      <h1 className=" text-white text-center font-semibold text-5xl font-sans mt-44 mb-3"> WayFarer </h1>
+      <h1 className="text-white text-center text-xl font-sans mb-3"> Pinpoint where your favourite YouTubers go!</h1>
         
         <div className="flex flex-row justify-center gap-2">
             <input
@@ -120,10 +132,14 @@ const App = () => {
         )}
 
         {!searched && (
-          <p className="text-center text-white mt-3 font-semibold">
-            Pinpoint where your favourite YouTubers go!
+          <div className="text-center font-semibold">
+          <p className=" text-white mt-3">
+            Identify specific locations...
           </p>
-          
+          <p>
+          ...Discover optimal paths
+          </p>
+          </div>
         )}
         
         {isInvalid && (
@@ -137,15 +153,26 @@ const App = () => {
 
         {openPaths && (
           <div>
-            <MapPath />
+            <YoutubeVideo className="rounded-xl" url={youtubeURL}/>
+            <MapPath mapData={mapData}/>
             
           </div>
         )}
 
         {openMarkers && (
-          <div>
+          
+          <div className="my-4 flex flex-col items-center">
+            <YoutubeVideo className="rounded-xl" url={youtubeURL}/>
             <MapMarkers mapData={mapData} />
-            <YoutubeVideo url={youtubeURL}/>
+            <div className="rounded-xl flex justify-center placesList w-1/3">
+              <div className="flex gap-2 justify-center items-center">
+                <h1 className="font-sand text-2xl font-bold text-brown_red"> {mapData.length} Places of Interest </h1>
+                <img className="w-10" src="./Search_Icon.svg"/>
+              </div>
+            </div>
+
+            <PlaceCard links={placeLinks}/>
+        
           </div>
         )}
 

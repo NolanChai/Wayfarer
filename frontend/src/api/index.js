@@ -30,6 +30,7 @@ export const getMarkerImages = async (locations) => {
 }
 */
 
+/*
 export const getMarkerImages = async (locations) => {
     const url = "http://127.0.0.1:5000/api/generate_images";
     const response = await fetch(url, {
@@ -39,5 +40,31 @@ export const getMarkerImages = async (locations) => {
         },
         body: JSON.stringify(locations)
       });
-    console.log(response)
+    return response;
+}
+*/
+
+export const getWaypoints = async (arrayOfLL) => {
+    try {
+        let queryStr = '';
+
+    for (var i = 0; i < arrayOfLL.length; i++) {
+        if (i == arrayOfLL.length - 1) {
+            queryStr += arrayOfLL[i][0] + ',' + arrayOfLL[i][1];
+        } else {
+        queryStr += arrayOfLL[i][0] + ',' + arrayOfLL[i][1] + ';';
+        }
+    }
+    const accessToken = 'pk.eyJ1IjoiZWNsYWhhY2tzMjAyMyIsImEiOiJjbGdyanp4NDkxazA1M2VwM3lmb3QzNmpqIn0.0kouosUyDJf1DznZvltYZw';
+    const url = `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${queryStr}?source=first&destination=last&roundtrip=false&access_token=${accessToken}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log("200: Successss!");
+    //console.log(data);
+    return data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+    
 }
