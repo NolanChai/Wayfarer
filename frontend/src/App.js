@@ -20,8 +20,6 @@ const App = () => {
   const [openPaths, setOpenPaths] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
 
-  const colors = ['bg-paper_yellow', 'bg-paper_brown', 'bg-paper_green']
-
   const handleClickMarkers = async () => {
     
     setIsInvalid(false);
@@ -94,13 +92,13 @@ const App = () => {
   }, [mapData])
 
   return (
-    <div className="font-sans">
-      <h1 className=" text-white text-center font-semibold text-5xl font-sans mt-44 mb-3"> WayFarer </h1>
-      <h1 className="text-white text-center text-xl font-sans mb-3"> Pinpoint where your favourite YouTubers go!</h1>
+    <div className="font-sans transition-all duration-300">
+      <h1 className="animate-charcter text-center font-semibold font-sans mt-44"> WayFarer </h1>
+      <h1 className="text-white text-center text-xl font-sans mb-3"> Relive your favorite Youtube travel adventures!</h1>
         
-        <div className="flex flex-row justify-center gap-2">
+        <div className="flex flex-row justify-center gap-2 ">
             <input
-              className="rounded w-6/12"
+              className="rounded w-6/12 shadow-white hover:scale-101 transition-all duration-300"
               type="text"
               placeholder="Explore..."
               value={query}
@@ -108,14 +106,14 @@ const App = () => {
             />
 
           <button
-            className="rounded px-2"
+            className="rounded px-2 shadow-white"
             onClick={handleClickMarkers}
           >
             <img className="w-10 px-1 py-1" src="./Map_pin_icon.svg" alt="search"/>
           </button>
 
           <button
-            className="rounded px-2"
+            className="rounded px-2 shadow-white"
             onClick={handleClickPaths}
           >
             <img className="w-12 px-1" src="./path.svg" alt="search"/>
@@ -123,7 +121,7 @@ const App = () => {
         </div>
 
         {isLoading && (
-          <div className="mt-3 flex justify-center">
+          <div className="mt-3 flex justify-center transition-all duration-300">
             <div className="flex flex-col items-center">
               <div className="loader mb-3"/>
               <div className="loading mb-1"> Searching </div>
@@ -132,18 +130,19 @@ const App = () => {
         )}
 
         {!searched && (
-          <div className="text-center font-semibold">
-          <p className=" text-white mt-3">
-            Identify specific locations...
-          </p>
-          <p>
-          ...Discover optimal paths
-          </p>
+          <div className="text-center font-semibold transition-all duration-300">
+            <p className="mt-3 text-white">
+              Identify specific locations...
+            </p>
+            <p className="text-white">
+            ...Discover optimal paths
+            </p>
+            <span class="pinJump"></span>
           </div>
         )}
         
         {isInvalid && (
-          <div>
+          <div className="transition-all duration-300">
           <div className="invalid"> </div>
           <div className="flex flex-row justify-center mt-6">
             <h1 className="text-white text-xl"> Couldn't find your video! </h1>
@@ -152,7 +151,7 @@ const App = () => {
         )}
 
         {openPaths && (
-          <div>
+          <div className="my-4 flex flex-col items-center">
             <YoutubeVideo className="rounded-xl" url={youtubeURL}/>
             <MapPath mapData={mapData}/>
             
