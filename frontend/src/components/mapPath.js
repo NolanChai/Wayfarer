@@ -56,7 +56,6 @@ export const MapPath = (MapData) => {
 
     map.addControl(directions, 'top-left');
 
-    
     console.log("2nd useEffect hook! This is the waypoint!")
     console.log(wayPoints);
     console.log("After waypoint")
@@ -83,8 +82,8 @@ export const MapPath = (MapData) => {
     }, [wayPoints]);
   
   return (
-      <div className="rounded m-6 p-3 flex justify-center">
-          <div className="rounded-xl bg-gray-300 p-2">
+      <div className="rounded m-4 flex justify-center">
+          <div className="rounded-xl bg-paper_yellow p-3">
               <div className="rounded-xl" id="map" style={{ width: '800px', height: '600px' }} />
           </div>
       </div>

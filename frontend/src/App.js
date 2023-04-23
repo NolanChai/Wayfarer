@@ -98,7 +98,7 @@ const App = () => {
         
         <div className="flex flex-row justify-center gap-2 ">
             <input
-              className="rounded w-6/12 shadow-2xl shadow-white hover:scale-101 transition-all duration-300"
+              className="rounded w-6/12 shadow-white hover:scale-101 transition-all duration-300"
               type="text"
               placeholder="Explore..."
               value={query}
@@ -106,14 +106,14 @@ const App = () => {
             />
 
           <button
-            className="rounded px-2 shadow-2xl shadow-white"
+            className="rounded px-2 shadow-white"
             onClick={handleClickMarkers}
           >
             <img className="w-10 px-1 py-1" src="./Map_pin_icon.svg" alt="search"/>
           </button>
 
           <button
-            className="rounded px-2 shadow-2xl shadow-white"
+            className="rounded px-2 shadow-white"
             onClick={handleClickPaths}
           >
             <img className="w-12 px-1" src="./path.svg" alt="search"/>
@@ -131,10 +131,10 @@ const App = () => {
 
         {!searched && (
           <div className="text-center font-semibold transition-all duration-300">
-            <p className="mt-3 text-neutral-800">
+            <p className="mt-3 text-white">
               Identify specific locations...
             </p>
-            <p className="text-neutral-800">
+            <p className="text-white">
             ...Discover optimal paths
             </p>
             <span class="pinJump"></span>
@@ -151,7 +151,7 @@ const App = () => {
         )}
 
         {openPaths && (
-          <div>
+          <div className="my-4 flex flex-col items-center">
             <YoutubeVideo className="rounded-xl" url={youtubeURL}/>
             <MapPath mapData={mapData}/>
             

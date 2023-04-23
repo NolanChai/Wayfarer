@@ -2,9 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  
-}
+
 
 body {
   margin: 0;
@@ -16,7 +14,6 @@ body {
   background-image: url('../public/japan_bg.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-
 }
 
 

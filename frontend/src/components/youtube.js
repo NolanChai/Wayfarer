@@ -12,7 +12,7 @@ export const YoutubeVideo = (url) => {
     const API_KEY = 'AIzaSyAlRmWzUU-pau84L87_rK4RFukOHs2_05g';
 
     useEffect(() => {
-        let vidId = JSON.stringify(url).split('v=')[1].replace('\"}', '');
+        let vidId = JSON.stringify(url).split('v=')[1].replace('\"}', '').split('&')[0];
         setVidID(vidId);
         //console.log('vid id');
         //console.log(videoId);
@@ -35,9 +35,9 @@ export const YoutubeVideo = (url) => {
     return (
         <div className="flex flex-col items-center justify-center">
 
-                <h2 className="text-white text-3xl mb-4 text-bold font-sans text-center"> {title} </h2>
+                <h2 className="rounded-xl bg-paper_yellow text-brown_red p-2 text-3xl mb-4 font-bold font-sans text-center"> {title} </h2>
                 <YouTube
-                    className="bg-paper_yellow rounded-xl p-4"
+                    className="bg-paper_yellow rounded-xl p-3"
                     videoId={vidID}
                     opts={{
                         height: '390',

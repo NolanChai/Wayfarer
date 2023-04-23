@@ -15,6 +15,8 @@ module.exports = {
         'paper_brown': '#d4a373',
         'paper_green': '#e9edc9',
       },
+      
+      
     }
   },
   plugins: [],
