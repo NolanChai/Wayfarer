@@ -44,15 +44,18 @@ const App = () => {
     }
   }
 
-  /*
+  
   useEffect(() => {
-    let locations = [];
-    mapData.map((data) => locations = [...locations, data[1]])
+
+    console.log("Use effect hook area")
+    console.log(mapData);
+    let locations = mapData.map((data) => data[1])
+    console.log(locations)
     const imageURLs = getMarkerImages(locations);
     console.log(imageURLs);
   }, [mapData])
-  */
- 
+  
+
   const handleClickPaths = async () => {
     
     setIsInvalid(false);

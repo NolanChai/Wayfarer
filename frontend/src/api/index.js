@@ -31,7 +31,7 @@ export const getMarkerImages = async (locations) => {
 */
 
 export const getMarkerImages = async (locations) => {
-    const url = "http://127.0.0.1:5000/api/get_images";
+    const url = "http://127.0.0.1:5000/api/generate_images";
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -39,4 +39,5 @@ export const getMarkerImages = async (locations) => {
         },
         body: JSON.stringify(locations)
       });
+    console.log(response)
 }

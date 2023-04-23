@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import YouTube from 'react-youtube';
 
 export const YoutubeVideo = (url) => {
-    console.log("this is the url")
-    console.log(url)
+    //console.log("this is the url")
+    //console.log(url)
 
     const [thumbnailUrl, setThumbnailUrl] = useState('');
     const [title, setTitle] = useState('');
@@ -12,8 +12,8 @@ export const YoutubeVideo = (url) => {
 
     useEffect(() => {
         let videoId = JSON.stringify(url).split('v=')[1].replace('\"}', '');
-        console.log('vid id');
-        console.log(videoId);
+        //console.log('vid id');
+        //console.log(videoId);
         
         const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
         const titleUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`;
@@ -21,9 +21,9 @@ export const YoutubeVideo = (url) => {
         const fetchVideo = async () => {
             const response = await fetch(titleUrl);
             const data = await response.json();
-            console.log(data);
+            //console.log(data);
             setTitle(data.items[0].snippet.title);
-            console.log(data.items[0].snippet.title);
+            //console.log(data.items[0].snippet.title);
         };
 
         setThumbnailUrl(thumbnailUrl);

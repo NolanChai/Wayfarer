@@ -132,7 +132,7 @@ def get_coordinates():
 
     geos = []
     for location in locations:
-        geo = geolocator.geocode(location, timeout=10000)
+        geo = geolocator.geocode(location, timeout=100000)
         if geo == None:
             pass
         else:
@@ -146,6 +146,8 @@ def generate_images():
     locations = request.get_json()
     image_urls = []
 
+    print(locations)
+    """
     for location in locations:
         prompt = f"{location} location"
         response = openai.Image.create(
@@ -158,6 +160,6 @@ def generate_images():
         image_urls.append(image_url)
 
     return jsonify(image_urls)
-
+    """
 if __name__ == '__main__':
     app.run(debug=True)
